@@ -12,6 +12,7 @@ function initializeApp() {
     // Set up event listeners for stat inputs
     const statInputs = document.querySelectorAll('.stat-input');
     statInputs.forEach(input => {
+<<<<<<< HEAD
         input.addEventListener('input', function() {
             updateModifier.call(this);
             updateCalculatedStats();
@@ -30,6 +31,13 @@ function initializeApp() {
         input.addEventListener('input', updateCalculatedStats);
         input.addEventListener('change', updateCalculatedStats);
     });
+=======
+        input.addEventListener('input', updateModifier);
+        input.addEventListener('change', updateModifier);
+        // Initialize modifiers
+        updateModifier.call(input);
+    });
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
 
     // Load saved character data if available
     loadCharacterData();
@@ -40,6 +48,7 @@ function initializeApp() {
     statInputs.forEach(input => {
         input.addEventListener('change', saveCharacterData);
     });
+<<<<<<< HEAD
     bonusInputs.forEach(input => {
         input.addEventListener('change', saveCharacterData);
     });
@@ -157,11 +166,22 @@ function getCalculatedStatValue(statName) {
     } else {
         return parseInt(document.getElementById(statName).value) || 0;
     }
+=======
+}
+
+// Calculate ability modifier from ability score
+function calculateModifier(score) {
+    return Math.floor((score - 10) / 2);
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
 }
 
 // Update modifier display when stat changes
 function updateModifier() {
+<<<<<<< HEAD
     const statValue = parseInt(this.value) || 0;
+=======
+    const statValue = parseInt(this.value) || 10;
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
     const modifier = calculateModifier(statValue);
     const modifierElement = document.getElementById(this.id + '-mod');
     
@@ -181,6 +201,7 @@ function updateModifier() {
     }
 }
 
+<<<<<<< HEAD
 // Roll 3d10 + modifier for a specific stat
 function rollStat(statName) {
     const statValue = getCalculatedStatValue(statName);
@@ -192,23 +213,44 @@ function rollStat(statName) {
     const die3 = Math.floor(Math.random() * 10) + 1;
     const diceRoll = die1 + die2 + die3;
     const totalRoll = diceRoll + modifier;
+=======
+// Roll a d20 + modifier for a specific stat
+function rollStat(statName) {
+    const statInput = document.getElementById(statName);
+    const statValue = parseInt(statInput.value) || 10;
+    const modifier = calculateModifier(statValue);
+    
+    // Roll a d20
+    const d20Roll = Math.floor(Math.random() * 20) + 1;
+    const totalRoll = d20Roll + modifier;
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
     
     // Get character name
     const characterName = document.getElementById('characterName').value || 'Character';
     
+<<<<<<< HEAD
     // Check for critical
     const critical = getCriticalType([die1, die2, die3]);
     
+=======
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
     // Create roll result object
     const rollResult = {
         character: characterName,
         stat: statName.toUpperCase(),
+<<<<<<< HEAD
         dice: [die1, die2, die3],
         diceTotal: diceRoll,
         modifier: modifier,
         total: totalRoll,
         abilityScore: statValue,
         critical: critical,
+=======
+        d20: d20Roll,
+        modifier: modifier,
+        total: totalRoll,
+        abilityScore: statValue,
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
         timestamp: new Date()
     };
     
@@ -235,6 +277,7 @@ function displayRoll(rollResult) {
     const rollEntry = document.createElement('div');
     rollEntry.className = 'roll-entry';
     
+<<<<<<< HEAD
     // Check for critical hits
     const critical = getCriticalType(rollResult.dice);
     
@@ -247,10 +290,18 @@ function displayRoll(rollResult) {
         rollEntry.classList.add('natural-twenty'); // Reuse existing class for max roll
     } else if (rollResult.diceTotal === 3) {
         rollEntry.classList.add('critical'); // Reuse existing class for min roll
+=======
+    // Special styling for natural 20s and 1s
+    if (rollResult.d20 === 20) {
+        rollEntry.classList.add('natural-twenty');
+    } else if (rollResult.d20 === 1) {
+        rollEntry.classList.add('critical');
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
     }
     
     const modifierText = rollResult.modifier >= 0 ? `+${rollResult.modifier}` : `${rollResult.modifier}`;
     const timeString = rollResult.timestamp.toLocaleTimeString();
+<<<<<<< HEAD
     const diceDisplay = `[${rollResult.dice.join(', ')}]`;
     
     let criticalDisplay = '';
@@ -262,6 +313,12 @@ function displayRoll(rollResult) {
         <strong>${rollResult.character}</strong> - ${rollResult.stat} Check<br>
         <span style="color: #d4af37;">3d10:</span> ${diceDisplay} = ${rollResult.diceTotal} <span style="color: #90ee90;">${modifierText}</span> = <strong>${rollResult.total}</strong>
         ${criticalDisplay}
+=======
+    
+    rollEntry.innerHTML = `
+        <strong>${rollResult.character}</strong> - ${rollResult.stat} Check<br>
+        <span style="color: #d4af37;">d20:</span> ${rollResult.d20} <span style="color: #90ee90;">${modifierText}</span> = <strong>${rollResult.total}</strong>
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
         <span style="float: right; font-size: 0.8em; color: rgba(244, 241, 232, 0.6);">${timeString}</span>
     `;
     
@@ -314,6 +371,7 @@ async function sendToDiscord(rollResult) {
         // Create Discord embed
         const embed = {
             title: `🎲 ${rollResult.character} - ${rollResult.stat} Check`,
+<<<<<<< HEAD
             color: rollResult.critical ? parseInt(rollResult.critical.color.replace('#', '0x')) : 
                    (rollResult.diceTotal === 30 ? 0x00ff00 : rollResult.diceTotal === 3 ? 0xff0000 : 0x8b4513),
             fields: [
@@ -324,17 +382,33 @@ async function sendToDiscord(rollResult) {
                 },
                 {
                     name: "📊 Stat Value",
+=======
+            color: rollResult.d20 === 20 ? 0x00ff00 : rollResult.d20 === 1 ? 0xff0000 : 0x8b4513,
+            fields: [
+                {
+                    name: "🎯 Roll Result",
+                    value: `d20: **${rollResult.d20}** ${rollResult.modifier >= 0 ? '+' : ''}${rollResult.modifier} = **${rollResult.total}**`,
+                    inline: false
+                },
+                {
+                    name: "📊 Ability Score",
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
                     value: `${rollResult.stat}: ${rollResult.abilityScore}`,
                     inline: true
                 },
                 {
+<<<<<<< HEAD
                     name: "⚡ Bonus",
+=======
+                    name: "⚡ Modifier",
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
                     value: `${rollResult.modifier >= 0 ? '+' : ''}${rollResult.modifier}`,
                     inline: true
                 }
             ],
             timestamp: new Date().toISOString(),
             footer: {
+<<<<<<< HEAD
                 text: "Character Stats Roller (3d10)"
             }
         };
@@ -346,6 +420,17 @@ async function sendToDiscord(rollResult) {
             embed.description = "🌟 **MAXIMUM ROLL (30)!** 🌟";
         } else if (rollResult.diceTotal === 3) {
             embed.description = "💀 **MINIMUM ROLL (3)...** 💀";
+=======
+                text: "D&D Character Stats Roller"
+            }
+        };
+
+        // Add special message for natural 20s and 1s
+        if (rollResult.d20 === 20) {
+            embed.description = "🌟 **NATURAL 20!** 🌟";
+        } else if (rollResult.d20 === 1) {
+            embed.description = "💀 **NATURAL 1...** 💀";
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
         }
 
         const discordPayload = {
@@ -392,12 +477,20 @@ async function testDiscordWebhook() {
 
     const testRoll = {
         character: 'TestCharacter',
+<<<<<<< HEAD
         stat: 'MENTE',
         dice: [7, 4, 6],
         diceTotal: 17,
         modifier: 2,
         total: 19,
         abilityScore: 2
+=======
+        stat: 'STR',
+        d20: 15,
+        modifier: 3,
+        total: 18,
+        abilityScore: 16
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
     };
 
     showToast('Testing Discord webhook...');
@@ -459,6 +552,7 @@ function saveCharacterData() {
     const characterData = {
         name: document.getElementById('characterName').value,
         stats: {
+<<<<<<< HEAD
             mente: document.getElementById('mente').value,
             spirito: document.getElementById('spirito').value,
             cuore: document.getElementById('cuore').value,
@@ -473,11 +567,27 @@ function saveCharacterData() {
     };
     
     localStorage.setItem('characterData', JSON.stringify(characterData));
+=======
+            str: document.getElementById('str').value,
+            dex: document.getElementById('dex').value,
+            con: document.getElementById('con').value,
+            int: document.getElementById('int').value,
+            wis: document.getElementById('wis').value,
+            cha: document.getElementById('cha').value
+        }
+    };
+    
+    localStorage.setItem('dndCharacterData', JSON.stringify(characterData));
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
 }
 
 // Load character data from localStorage
 function loadCharacterData() {
+<<<<<<< HEAD
     const savedData = localStorage.getItem('characterData');
+=======
+    const savedData = localStorage.getItem('dndCharacterData');
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
     if (savedData) {
         try {
             const characterData = JSON.parse(savedData);
@@ -495,6 +605,7 @@ function loadCharacterData() {
                     }
                 });
             }
+<<<<<<< HEAD
             
             if (characterData.bonuses) {
                 Object.keys(characterData.bonuses).forEach(stat => {
@@ -504,6 +615,8 @@ function loadCharacterData() {
                     }
                 });
             }
+=======
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
         } catch (e) {
             console.warn('Failed to load character data:', e);
         }
@@ -527,6 +640,7 @@ document.addEventListener('keydown', function(e) {
     // Alt + number keys to roll stats quickly
     if (e.altKey && !e.ctrlKey && !e.shiftKey) {
         const statMap = {
+<<<<<<< HEAD
             '1': 'mente',
             '2': 'spirito', 
             '3': 'cuore',
@@ -535,6 +649,14 @@ document.addEventListener('keydown', function(e) {
             '6': 'riflessi',
             '7': 'virtu',
             '8': 'autorita'
+=======
+            '1': 'str',
+            '2': 'dex',
+            '3': 'con',
+            '4': 'int',
+            '5': 'wis',
+            '6': 'cha'
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
         };
         
         if (statMap[e.key]) {
@@ -556,7 +678,11 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+<<<<<<< HEAD
 /* // Add help button to the page
+=======
+// Add help button to the page
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
 document.addEventListener('DOMContentLoaded', function() {
     const helpBtn = document.createElement('button');
     helpBtn.textContent = '?';
@@ -583,6 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showHelp() {
     const helpText = `
+<<<<<<< HEAD
 Character Stats Roller (3d10) - Help
 
 Sistema di Statistiche:
@@ -601,6 +728,12 @@ Sistema di Critici:
 Keyboard Shortcuts:
 • Alt + 1-4: Statistiche Mentali (MENTE, SPIRITO, CUORE, VOLONTÀ)
 • Alt + 5-8: Statistiche Fisiche (VIGORE, RIFLESSI, VIRTÙ, AUTORITÀ)
+=======
+D&D Character Stats Roller - Help
+
+Keyboard Shortcuts:
+• Alt + 1-6: Quick roll stats (STR, DEX, CON, INT, WIS, CHA)
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
 • Ctrl + D: Toggle Discord mode
 • Ctrl + H: Clear roll history
 
@@ -609,15 +742,27 @@ Discord Integration:
 • Go to channel → Edit Channel → Integrations → Webhooks
 • Create new webhook and copy the URL
 • Enable Discord mode and paste the URL
+<<<<<<< HEAD
 • 3d10 rolls will be sent directly to your Discord channel!
 
 Features:
 • Calcolo automatico di Volontà e Autorità
 • Sistema di critici a 4 livelli
 • Color-coded results for critical hits
+=======
+• Rolls will be sent directly to your Discord channel!
+
+Features:
+• Automatic modifier calculation
+• Color-coded results for nat 20s and 1s
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
 • Roll history with timestamps
 • Character data auto-save
     `;
     
     alert(helpText);
+<<<<<<< HEAD
 } */
+=======
+}
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10

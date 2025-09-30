@@ -3,17 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Character Stats Roller (3d10)</title>
+=======
+    <title>D&D Character Stats Roller</title>
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
+<<<<<<< HEAD
             <h1>Character Stats Roller</h1>
+=======
+            <h1>D&D Character Stats</h1>
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
             <input type="text" id="characterName" placeholder="Character Name" class="character-name">
         </header>
 
         <div class="stats-container">
+<<<<<<< HEAD
             <div class="stats-section">
                 <h2 class="section-title">Statistiche Mentali</h2>
                 <div class="stats-grid">
@@ -92,6 +101,48 @@
                         <div class="calc-info">Auto: Fisiche ÷ 4</div>
                     </div>
                 </div>
+=======
+            <div class="stat-block" data-stat="str">
+                <h3>STR</h3>
+                <input type="number" id="str" min="1" max="30" value="10" class="stat-input">
+                <div class="modifier" id="str-mod">+0</div>
+                <button class="roll-btn" onclick="rollStat('str')">Roll</button>
+            </div>
+
+            <div class="stat-block" data-stat="dex">
+                <h3>DEX</h3>
+                <input type="number" id="dex" min="1" max="30" value="10" class="stat-input">
+                <div class="modifier" id="dex-mod">+0</div>
+                <button class="roll-btn" onclick="rollStat('dex')">Roll</button>
+            </div>
+
+            <div class="stat-block" data-stat="con">
+                <h3>CON</h3>
+                <input type="number" id="con" min="1" max="30" value="10" class="stat-input">
+                <div class="modifier" id="con-mod">+0</div>
+                <button class="roll-btn" onclick="rollStat('con')">Roll</button>
+            </div>
+
+            <div class="stat-block" data-stat="int">
+                <h3>INT</h3>
+                <input type="number" id="int" min="1" max="30" value="10" class="stat-input">
+                <div class="modifier" id="int-mod">+0</div>
+                <button class="roll-btn" onclick="rollStat('int')">Roll</button>
+            </div>
+
+            <div class="stat-block" data-stat="wis">
+                <h3>WIS</h3>
+                <input type="number" id="wis" min="1" max="30" value="10" class="stat-input">
+                <div class="modifier" id="wis-mod">+0</div>
+                <button class="roll-btn" onclick="rollStat('wis')">Roll</button>
+            </div>
+
+            <div class="stat-block" data-stat="cha">
+                <h3>CHA</h3>
+                <input type="number" id="cha" min="1" max="30" value="10" class="stat-input">
+                <div class="modifier" id="cha-mod">+0</div>
+                <button class="roll-btn" onclick="rollStat('cha')">Roll</button>
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
             </div>
         </div>
 
@@ -105,7 +156,11 @@
             <h3>Discord Integration</h3>
             <button onclick="toggleDiscordMode()" id="discordToggle" class="toggle-btn">Enable Discord Mode</button>
             <button onclick="testDiscordWebhook()" id="testDiscord" class="toggle-btn" style="background: linear-gradient(145deg, #7289da, #5a73d1); margin-left: 10px;">Test Discord</button>
+<<<<<<< HEAD
             <p class="integration-info">Send 3d10 roll results directly to your Discord text channel via webhook.</p>
+=======
+            <p class="integration-info">Send roll results directly to your Discord text channel via webhook.</p>
+>>>>>>> 396211a008b9b98e041e1c27794b188da8fccb10
             <div class="discord-help">
                 <details>
                     <summary>How to set up Discord webhook</summary>
